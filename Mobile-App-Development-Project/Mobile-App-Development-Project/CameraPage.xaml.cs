@@ -119,6 +119,11 @@ namespace Mobile_App_Development_Project
                     _mediaCapture = null;
                 });
             }
+        }
+
+        // Capture a photo to a file
+        private void elCapture_Tapped(object sender, TappedRoutedEventArgs e)
+        {
 
         }
     }
