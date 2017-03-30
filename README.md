@@ -28,15 +28,16 @@ For this project I decided to make a camera app. The possible features for this 
 ### Development
 
 #### Album
-The main page of this application contains an album displaying all the users photos. It also has a menu to navigate to the other pages.
+The main page of this application contains an album displaying all the users photos. When a photo in the album is tapped, the user brought to the image page. It also has a menu to navigate to the other pages.
+
+#### Image
+The image page displays a full size version of a particular image.
 
 #### Camera
 The camera aspect of this project required both the Camera and Microphone capabilities in the manifest file. When the camera page is opened a preview of the camera is shown.
 
 #### Map
 I choose to use Bing Maps for the map aspect of this project. An application key was required to use Bing Maps. When the map page loads a list of photos is retrieved. The Geotag metadata is then extracted from the image files and are plotted on the map.
-
-#### Finding a free image tagging API
 
 ### Why will the user open this app for a second time?
 

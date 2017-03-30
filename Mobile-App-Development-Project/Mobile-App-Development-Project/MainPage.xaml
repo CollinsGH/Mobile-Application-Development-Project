@@ -24,7 +24,7 @@
             
             <!-- Photo album -->
             <ScrollViewer Grid.Row="1" Grid.Column="0">
-                <Grid x:Name="grdAlbum"/>
+                <Grid x:Name="grdAlbum" VerticalAlignment="Top"/>
             </ScrollViewer>
             
             <!-- Menu -->
