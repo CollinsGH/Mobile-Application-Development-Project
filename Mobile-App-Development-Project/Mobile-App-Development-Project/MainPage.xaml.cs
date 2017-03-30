@@ -26,5 +26,11 @@ namespace Mobile_App_Development_Project
         {
             this.InitializeComponent();
         }
+
+        private void btnNavCamera_Tapped(object sender, TappedRoutedEventArgs e)
+        {
+            // Navigate to the CameraPage
+            Frame.Navigate(typeof(CameraPage));
+        }
     }
 }

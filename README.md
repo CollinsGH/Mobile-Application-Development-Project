@@ -21,8 +21,12 @@ The following is a list of goals I set myself for this project.
 + Successfully submit the application to the Windows Store
 
 ### Planning
+For this project I decided to make a camera app. The possible features for this application include automatically captioning an image and displayng the photos on a map, where each photo was taken.
 
 ### Development
+
+#### Camera
+The camera aspect of this project required both the Camera and Microphone capabilities in the manifest file.
 
 #### Finding a free image tagging API
 

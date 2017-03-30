@@ -1,5 +1,5 @@
 ﻿<Page
-    x:Class="Mobile_App_Development_Project.MainPage"
+    x:Class="Mobile_App_Development_Project.CameraPage"
     xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
     xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
     xmlns:local="using:Mobile_App_Development_Project"
@@ -8,8 +8,6 @@
     mc:Ignorable="d">
 
     <Grid Background="{ThemeResource ApplicationPageBackgroundThemeBrush}">
-        <StackPanel HorizontalAlignment="Right" VerticalAlignment="Bottom" Padding="10">
-            <Button x:Name="btnNavCamera" Content="Camera" Tapped="btnNavCamera_Tapped"/>
-        </StackPanel>
+        <CaptureElement Name="PreviewControl" Stretch="Uniform"/>
     </Grid>
 </Page>
