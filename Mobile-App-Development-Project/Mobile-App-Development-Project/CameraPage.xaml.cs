@@ -19,6 +19,11 @@ using Windows.System.Display;
 using Windows.Graphics.Display;
 using Windows.UI.Core;
 using System.Diagnostics;
+using Windows.Storage;
+using Windows.Media.MediaProperties;
+using Windows.Storage.Streams;
+using Windows.Graphics.Imaging;
+using Windows.Storage.FileProperties;
 
 // The Blank Page item template is documented at http://go.microsoft.com/fwlink/?LinkId=234238
 
@@ -122,9 +127,31 @@ namespace Mobile_App_Development_Project
         }
 
         // Capture a photo to a file
-        private void elCapture_Tapped(object sender, TappedRoutedEventArgs e)
+        // Adapted from https://docs.microsoft.com/en-us/windows/uwp/audio-video-camera/basic-photo-video-and-audio-capture-with-mediacapture
+        private async void elCapture_Tapped(object sender, TappedRoutedEventArgs e)
         {
+            String imageName = DateTime.Now.ToString("yyyyMMddHHmmss");
 
+            var myPictures = await StorageLibrary.GetLibraryAsync(KnownLibraryId.Pictures);
+            StorageFile file = await myPictures.SaveFolder.CreateFileAsync(imageName + ".jpg", CreationCollisionOption.GenerateUniqueName);
+
+            using (var captureStream = new InMemoryRandomAccessStream())
+            {
+                await _mediaCapture.CapturePhotoToStreamAsync(ImageEncodingProperties.CreateJpeg(), captureStream);
+
+                using (var fileStream = await file.OpenAsync(FileAccessMode.ReadWrite))
+                {
+                    var decoder = await BitmapDecoder.CreateAsync(captureStream);
+                    var encoder = await BitmapEncoder.CreateForTranscodingAsync(fileStream, decoder);
+
+                    var properties = new BitmapPropertySet {
+                           { "System.Photo.Orientation", new BitmapTypedValue(PhotoOrientation.Normal, PropertyType.UInt16) }
+                    };
+
+                    await encoder.BitmapProperties.SetPropertiesAsync(properties);
+                    await encoder.FlushAsync();
+                }
+            }
         }
     }
 }
