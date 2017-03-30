@@ -60,5 +60,11 @@ namespace Mobile_App_Development_Project
                 }
             }
         }
+
+        private void elBack_Tapped(object sender, TappedRoutedEventArgs e)
+        {
+            // Navigate back to the MainPage
+            Frame.Navigate(typeof(MainPage));
+        }
     }
 }

@@ -14,5 +14,15 @@
             ZoomInteractionMode="GestureAndControl"
             TiltInteractionMode="GestureAndControl"   
             MapServiceToken="HS8iuSGnAmsHoSbtJkkj~MIPd8RGNwti7dymsLzZEsg~AuuDzzeHrv3jdilrLsHfdMutHXYy62VuBfm4_9dOuU7zwtXUnOV_1kLGv1XrSMSC"/>
+
+        <!-- Menu -->
+        <StackPanel Orientation="Horizontal" VerticalAlignment="Bottom" Padding="5" HorizontalAlignment="Center">
+            <!-- Back button -->
+            <Ellipse x:Name="elBack" Width="50" Height="50" Margin="4" Tapped="elBack_Tapped">
+                <Ellipse.Fill>
+                    <ImageBrush ImageSource="Images/back-arrow-icon.png" />
+                </Ellipse.Fill>
+            </Ellipse>
+        </StackPanel>
     </Grid>
 </Page>
