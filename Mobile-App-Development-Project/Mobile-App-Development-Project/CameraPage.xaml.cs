@@ -45,21 +45,23 @@ namespace Mobile_App_Development_Project
         private async void Application_Suspending(object sender, SuspendingEventArgs e)
         {
             // Handle global application events only if this page is active
-            if (Frame.CurrentSourcePageType == typeof(MainPage))
+            if (Frame.CurrentSourcePageType == typeof(CameraPage))
             {
                 var deferral = e.SuspendingOperation.GetDeferral();
                 await CleanupCameraAsync();
                 deferral.Complete();
             }
         }
-
+        
         protected async override void OnNavigatedTo(NavigationEventArgs e)
         {
+            // Start preview when the user navigates to the camera page
             await StartPreviewAsync();
         }
 
         protected async override void OnNavigatedFrom(NavigationEventArgs e)
         {
+            // Stop preview when the user navigates away from the camera page
             await CleanupCameraAsync();
         }
 

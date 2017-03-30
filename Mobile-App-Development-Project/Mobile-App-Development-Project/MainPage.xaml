@@ -9,7 +9,7 @@
 
     <Grid Background="{ThemeResource ApplicationPageBackgroundThemeBrush}">
         <StackPanel HorizontalAlignment="Right" VerticalAlignment="Bottom" Padding="10">
-            <Button x:Name="btnNavCamera" Content="Camera" Tapped="btnNavCamera_Tapped"/>
+            <Button x:Name="btnNavCamera" x:Uid="uidNavCamera" Content="Camera" Tapped="btnNavCamera_Tapped"/>
         </StackPanel>
     </Grid>
 </Page>
