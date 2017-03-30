@@ -120,4 +120,7 @@
   <data name="uidNavCamera.Content" xml:space="preserve">
     <value>Take a Picture</value>
   </data>
+  <data name="uidNavMap.Content" xml:space="preserve">
+    <value>View Map</value>
+  </data>
 </root>

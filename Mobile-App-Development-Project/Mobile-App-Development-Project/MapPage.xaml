@@ -1,5 +1,5 @@
 ﻿<Page
-    x:Class="Mobile_App_Development_Project.MainPage"
+    x:Class="Mobile_App_Development_Project.MapPage"
     xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
     xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
     xmlns:local="using:Mobile_App_Development_Project"
@@ -8,9 +8,6 @@
     mc:Ignorable="d">
 
     <Grid Background="{ThemeResource ApplicationPageBackgroundThemeBrush}">
-        <StackPanel HorizontalAlignment="Right" VerticalAlignment="Bottom" Padding="10">
-            <Button x:Name="btnNavCamera" x:Uid="uidNavCamera" Content="Camera" Width="200" Margin="0, 2" Tapped="btnNavCamera_Tapped"/>
-            <Button x:Name="btnNavMap" x:Uid="uidNavMap" Content="Map" Width="200" Margin="0, 2" Tapped="btnNavMap_Tapped"/>
-        </StackPanel>
+
     </Grid>
 </Page>

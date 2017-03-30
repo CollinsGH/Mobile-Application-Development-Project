@@ -13,30 +13,18 @@ using Windows.UI.Xaml.Input;
 using Windows.UI.Xaml.Media;
 using Windows.UI.Xaml.Navigation;
 
-// The Blank Page item template is documented at http://go.microsoft.com/fwlink/?LinkId=402352&clcid=0x409
+// The Blank Page item template is documented at http://go.microsoft.com/fwlink/?LinkId=234238
 
 namespace Mobile_App_Development_Project
 {
     /// <summary>
     /// An empty page that can be used on its own or navigated to within a Frame.
     /// </summary>
-    public sealed partial class MainPage : Page
+    public sealed partial class MapPage : Page
     {
-        public MainPage()
+        public MapPage()
         {
             this.InitializeComponent();
-        }
-
-        private void btnNavCamera_Tapped(object sender, TappedRoutedEventArgs e)
-        {
-            // Navigate to the CameraPage
-            Frame.Navigate(typeof(CameraPage));
-        }
-
-        private void btnNavMap_Tapped(object sender, TappedRoutedEventArgs e)
-        {
-            // Navigate to the MapPage
-            Frame.Navigate(typeof(MapPage));
         }
     }
 }
