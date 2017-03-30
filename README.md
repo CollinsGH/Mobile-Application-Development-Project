@@ -18,6 +18,7 @@ The following is a list of goals I set myself for this project.
 
 + Fullfil the brief outlined above
 + Make a multilingual application
++ Only use Microsoft products
 + Successfully submit the application to the Windows Store
 
 ### Planning
@@ -27,6 +28,9 @@ For this project I decided to make a camera app. The possible features for this 
 
 #### Camera
 The camera aspect of this project required both the Camera and Microphone capabilities in the manifest file.
+
+#### Map
+I choose to use Bing Maps for the map aspect of this project. An application key was required to use Bing Maps.
 
 #### Finding a free image tagging API
 

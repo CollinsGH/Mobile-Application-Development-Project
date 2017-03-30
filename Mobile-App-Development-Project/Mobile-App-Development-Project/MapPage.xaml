@@ -5,9 +5,14 @@
     xmlns:local="using:Mobile_App_Development_Project"
     xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
     xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+    xmlns:Maps="using:Windows.UI.Xaml.Controls.Maps"
     mc:Ignorable="d">
 
     <Grid Background="{ThemeResource ApplicationPageBackgroundThemeBrush}">
-
+        <Maps:MapControl
+            x:Name="MapControl1"            
+            ZoomInteractionMode="GestureAndControl"
+            TiltInteractionMode="GestureAndControl"   
+            MapServiceToken="HS8iuSGnAmsHoSbtJkkj~MIPd8RGNwti7dymsLzZEsg~AuuDzzeHrv3jdilrLsHfdMutHXYy62VuBfm4_9dOuU7zwtXUnOV_1kLGv1XrSMSC"/>
     </Grid>
 </Page>
