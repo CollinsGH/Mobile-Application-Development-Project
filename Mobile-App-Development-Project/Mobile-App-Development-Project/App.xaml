@@ -5,4 +5,17 @@
     xmlns:local="using:Mobile_App_Development_Project"
     RequestedTheme="Light">
 
+    <Application.Resources>
+        <ResourceDictionary>
+            <ResourceDictionary.ThemeDictionaries>
+                <ResourceDictionary x:Key="Default">
+                    <Color x:Key="PrimaryColor">#000000</Color>
+                    <SolidColorBrush x:Key="ApplicationPageBackgroundThemeBrush" Color="{ThemeResource PrimaryColor}" />
+
+                    <Color x:Key="SecondaryColor">#CCCCCC</Color>
+                    <SolidColorBrush x:Key="SecondaryThemeBrush" Color="{ThemeResource SecondaryColor}" />
+                </ResourceDictionary>
+            </ResourceDictionary.ThemeDictionaries>
+        </ResourceDictionary>
+    </Application.Resources>
 </Application>

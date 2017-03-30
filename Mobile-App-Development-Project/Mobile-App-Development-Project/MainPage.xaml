@@ -20,7 +20,8 @@
             </Grid.ColumnDefinitions>
 
             <!-- Page Title -->
-            <TextBlock x:Name="tblPhotos" x:Uid="uidPhotos" Grid.Row="0" Grid.Column="0" FontSize="24" Padding="10"/>
+            <Rectangle Grid.Row="0" Grid.Column="0" Fill="{ThemeResource SecondaryThemeBrush}"/>
+            <TextBlock x:Name="tblPhotos" x:Uid="uidPhotos" Grid.Row="0" Grid.Column="0" Foreground="White" FontSize="24" Padding="10"/>
             
             <!-- Photo album -->
             <ScrollViewer Grid.Row="1" Grid.Column="0">
@@ -28,6 +29,7 @@
             </ScrollViewer>
             
             <!-- Menu -->
+            <Rectangle Grid.Row="2" Grid.Column="0" Fill="{ThemeResource SecondaryThemeBrush}"/>
             <StackPanel Grid.Row="2" Grid.Column="0" HorizontalAlignment="Right" Padding="10">
                 <Button x:Name="btnNavCamera" x:Uid="uidNavCamera" Content="Camera" Width="200" Margin="0, 2" Tapped="btnNavCamera_Tapped"/>
                 <Button x:Name="btnNavMap" x:Uid="uidNavMap" Content="Map" Width="200" Margin="0, 2" Tapped="btnNavMap_Tapped"/>

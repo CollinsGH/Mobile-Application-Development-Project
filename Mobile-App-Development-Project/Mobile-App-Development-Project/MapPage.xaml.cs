@@ -69,11 +69,12 @@ namespace Mobile_App_Development_Project
             MapControl.MapElementClick += MapControl_MapElementClick;
         }
 
+        // Adapted from http://stackoverflow.com/questions/34377203/how-to-create-mapicon-event-in-uwp
         private async void MapControl_MapElementClick(MapControl sender, MapElementClickEventArgs args)
         {
             MapIcon clickedMapIcon = args.MapElements.FirstOrDefault(x => x is MapIcon) as MapIcon;
 
-            // Get the index of the photo in the list from name
+            // Get the index of the photo in the list from name which is in the format "Photo [index]"
             int index = Int32.Parse(clickedMapIcon.Title.Split(' ')[1]) - 1;
 
             // Show the image in the frame
