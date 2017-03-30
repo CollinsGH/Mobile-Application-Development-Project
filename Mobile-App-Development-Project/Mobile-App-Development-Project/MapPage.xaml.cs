@@ -42,6 +42,7 @@ namespace Mobile_App_Development_Project
             AddPointsToMap();
         }
 
+        // Adapted from https://docs.microsoft.com/en-us/windows/uwp/maps-and-location/display-poi#add-a-mapicon
         private void AddPointsToMap()
         {
             // Create a MapIcon for each Geopoint in list
