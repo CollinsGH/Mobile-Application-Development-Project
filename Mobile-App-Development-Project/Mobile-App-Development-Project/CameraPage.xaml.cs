@@ -24,6 +24,7 @@ using Windows.Media.MediaProperties;
 using Windows.Storage.Streams;
 using Windows.Graphics.Imaging;
 using Windows.Storage.FileProperties;
+using Windows.Devices.Geolocation;
 
 // The Blank Page item template is documented at http://go.microsoft.com/fwlink/?LinkId=234238
 
@@ -40,11 +41,32 @@ namespace Mobile_App_Development_Project
         private bool _isPreviewing; // Is the camera previewing
         private DisplayRequest _displayRequest; // Do not turn off display while previewing
 
+        private Geolocator _geo;
+
         public CameraPage()
         {
             this.InitializeComponent();
 
+            this.Loaded += CameraPage_Loaded;
             Application.Current.Suspending += Application_Suspending;
+        }
+
+        private async void CameraPage_Loaded(object sender, RoutedEventArgs e)
+        {
+            // Initialise GeoLocator
+            var access = await Geolocator.RequestAccessAsync();
+
+            switch (access)
+            {
+                case GeolocationAccessStatus.Allowed:
+                    _geo = new Geolocator();
+                    _geo.DesiredAccuracy = PositionAccuracy.Default;
+                    break;
+                default:
+                    // There was a problem initialising GeoLocator
+                    // Show an error to the user
+                    break;
+            }
         }
 
         private async void Application_Suspending(object sender, SuspendingEventArgs e)
@@ -150,8 +172,24 @@ namespace Mobile_App_Development_Project
 
                     await encoder.BitmapProperties.SetPropertiesAsync(properties);
                     await encoder.FlushAsync();
+                    
+                    GeoTagImageFile(file);
                 }
             }
+        }
+
+        // GeoTag the given file
+        private async void GeoTagImageFile(IStorageFile image)
+        {
+            if (_geo != null) {
+                await GeotagHelper.SetGeotagFromGeolocatorAsync(image, _geo);
+            }
+        }
+
+        private void elBack_Tapped(object sender, TappedRoutedEventArgs e)
+        {
+            // Navigate back to the MainPage
+            Frame.Navigate(typeof(MainPage));
         }
     }
 }

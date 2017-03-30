@@ -9,9 +9,17 @@
 
     <Grid Background="{ThemeResource ApplicationPageBackgroundThemeBrush}">
         <CaptureElement Name="PreviewControl" Stretch="Uniform"/>
-        
+
         <!-- Menu -->
         <StackPanel Orientation="Horizontal" VerticalAlignment="Bottom" Padding="5" HorizontalAlignment="Center">
+            <!-- Back button -->
+            <Ellipse x:Name="elBack" Width="50" Height="50" Margin="4" Tapped="elBack_Tapped">
+                <Ellipse.Fill>
+                    <ImageBrush ImageSource="Images/back-arrow-icon.png" />
+                </Ellipse.Fill>
+            </Ellipse>
+            
+            <!-- Capture button -->
             <Ellipse x:Name="elCapture" Width="75" Height="75" Margin="4" Tapped="elCapture_Tapped">
                 <Ellipse.Fill>
                     <ImageBrush ImageSource="Images/camera-icon.png" />

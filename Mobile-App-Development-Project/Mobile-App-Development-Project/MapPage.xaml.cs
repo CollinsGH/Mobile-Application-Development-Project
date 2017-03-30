@@ -49,11 +49,15 @@ namespace Mobile_App_Development_Project
 
             IReadOnlyList<StorageFile> files = await KnownFolders.PicturesLibrary.CreateFileQueryWithOptions(queryOption).GetFilesAsync();
 
-            // Read longitude/latitude of images
+            // Read Geotag of images
             foreach (var file in files)
             {
+                // This does not yet work
                 Geopoint geoPoint = await GeotagHelper.GetGeotagAsync(file);
-                Debug.Write(geoPoint);
+
+                if (geoPoint != null) {
+                    Debug.WriteLine(geoPoint.Position.Latitude);
+                }
             }
         }
     }
