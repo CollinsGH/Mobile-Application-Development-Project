@@ -81,9 +81,11 @@ namespace Mobile_App_Development_Project
                 BitmapImage bitmapImage = new BitmapImage();
                 FileRandomAccessStream stream = (FileRandomAccessStream)await photo.OpenAsync(FileAccessMode.Read);
                 bitmapImage.SetSource(stream);
-
+                
                 Image image = new Image();
                 image.Source = bitmapImage;
+                image.Margin = new Thickness(1);
+                image.Tapped += Image_Tapped;
 
                 // Add to grdAlbum
                 Grid.SetColumn(image, i % columns);
@@ -92,6 +94,12 @@ namespace Mobile_App_Development_Project
 
                 i++;
             }
+        }
+
+        private void Image_Tapped(object sender, TappedRoutedEventArgs e)
+        {
+            // Navigate to the ImagePage and pass the image as the parameter
+            Frame.Navigate(typeof(ImagePage), (Image)sender);
         }
 
         private void btnNavCamera_Tapped(object sender, TappedRoutedEventArgs e)

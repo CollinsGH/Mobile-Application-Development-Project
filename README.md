@@ -18,6 +18,7 @@ The following is a list of goals I set myself for this project.
 
 + Fullfil the brief outlined above
 + Make a multilingual application
++ Use at least one external service
 + Only use Microsoft products
 + Successfully submit the application to the Windows Store
 
@@ -26,11 +27,14 @@ For this project I decided to make a camera app. The possible features for this 
 
 ### Development
 
+#### Album
+The main page of this application contains an album displaying all the users photos. It also has a menu to navigate to the other pages.
+
 #### Camera
-The camera aspect of this project required both the Camera and Microphone capabilities in the manifest file.
+The camera aspect of this project required both the Camera and Microphone capabilities in the manifest file. When the camera page is opened a preview of the camera is shown.
 
 #### Map
-I choose to use Bing Maps for the map aspect of this project. An application key was required to use Bing Maps.
+I choose to use Bing Maps for the map aspect of this project. An application key was required to use Bing Maps. When the map page loads a list of photos is retrieved. The Geotag metadata is then extracted from the image files and are plotted on the map.
 
 #### Finding a free image tagging API
 
