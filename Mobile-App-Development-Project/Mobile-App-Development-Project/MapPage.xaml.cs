@@ -16,6 +16,8 @@ using Windows.UI.Xaml.Data;
 using Windows.UI.Xaml.Input;
 using Windows.UI.Xaml.Media;
 using Windows.UI.Xaml.Navigation;
+using Windows.UI.Xaml.Controls.Maps;
+using System.Threading.Tasks;
 
 // The Blank Page item template is documented at http://go.microsoft.com/fwlink/?LinkId=234238
 
@@ -26,31 +28,58 @@ namespace Mobile_App_Development_Project
     /// </summary>
     public sealed partial class MapPage : Page
     {
+        private LinkedList<Geopoint> _coordinates;
+
         public MapPage()
         {
             this.InitializeComponent();
+            _coordinates = new LinkedList<Geopoint>();
         }
 
-        protected override void OnNavigatedTo(NavigationEventArgs e)
+        protected override async void OnNavigatedTo(NavigationEventArgs e)
         {
-            GetCoordinates();
+            await GetCoordinates();
+            AddPointsToMap();
+        }
+
+        private void AddPointsToMap()
+        {
+            // Create a MapIcon for each Geopoint in list
+            foreach (Geopoint point in _coordinates) {
+                MapIcon mapIcon = new MapIcon();
+                mapIcon.Location = point;
+                mapIcon.NormalizedAnchorPoint = new Point(0.5, 1.0);
+                mapIcon.ZIndex = 0;
+
+                // Add the MapIcon to the map
+                MapControl.MapElements.Add(mapIcon);
+            }
         }
 
         // Get a list of all JPEG photos in the pictures library
         // Adapted from https://docs.microsoft.com/en-us/windows/uwp/files/quickstart-managing-folders-in-the-music-pictures-and-videos-libraries#querying-the-media-libraries
-        private async void GetCoordinates()
+        private async Task GetCoordinates()
         {
             IReadOnlyList<StorageFile> files = await Storage.GetPhotos();
 
             // Read Geotag of images
             foreach (var file in files)
             {
-                // This does not yet work
-                Geopoint geoPoint = await GeotagHelper.GetGeotagAsync(file);
+                // Had problems getting the Geotag info from the image using the GeotagHelper class
+                /*Geopoint geoPoint = await GeotagHelper.GetGeotagAsync(file);
 
                 if (geoPoint != null) {
                     Debug.WriteLine(geoPoint.Position.Latitude);
-                }
+                }*/
+
+                ImageProperties props = await file.Properties.GetImagePropertiesAsync();
+                BasicGeoposition pos = new BasicGeoposition() {
+                    Latitude = (double)props.Latitude,
+                    Longitude = (double)props.Longitude
+                };
+                Geopoint point = new Geopoint(pos);
+
+                _coordinates.AddLast(point);
             }
         }
 

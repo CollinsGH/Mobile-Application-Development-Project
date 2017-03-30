@@ -10,7 +10,7 @@
 
     <Grid Background="{ThemeResource ApplicationPageBackgroundThemeBrush}">
         <Maps:MapControl
-            x:Name="MapControl1"            
+            x:Name="MapControl"            
             ZoomInteractionMode="GestureAndControl"
             TiltInteractionMode="GestureAndControl"   
             MapServiceToken="HS8iuSGnAmsHoSbtJkkj~MIPd8RGNwti7dymsLzZEsg~AuuDzzeHrv3jdilrLsHfdMutHXYy62VuBfm4_9dOuU7zwtXUnOV_1kLGv1XrSMSC"/>
