@@ -9,7 +9,6 @@ using Windows.Foundation;
 using Windows.Foundation.Collections;
 using Windows.Storage;
 using Windows.Storage.FileProperties;
-using Windows.Storage.Search;
 using Windows.UI.Xaml;
 using Windows.UI.Xaml.Controls;
 using Windows.UI.Xaml.Controls.Primitives;
@@ -34,20 +33,14 @@ namespace Mobile_App_Development_Project
 
         protected override void OnNavigatedTo(NavigationEventArgs e)
         {
-            getPhotos();
+            GetCoordinates();
         }
 
         // Get a list of all JPEG photos in the pictures library
         // Adapted from https://docs.microsoft.com/en-us/windows/uwp/files/quickstart-managing-folders-in-the-music-pictures-and-videos-libraries#querying-the-media-libraries
-        private async void getPhotos()
+        private async void GetCoordinates()
         {
-            QueryOptions queryOption = new QueryOptions(CommonFileQuery.OrderByTitle, new string[] { ".jpg" });
-
-            queryOption.FolderDepth = FolderDepth.Deep;
-
-            Queue<IStorageFolder> folders = new Queue<IStorageFolder>();
-
-            IReadOnlyList<StorageFile> files = await KnownFolders.PicturesLibrary.CreateFileQueryWithOptions(queryOption).GetFilesAsync();
+            IReadOnlyList<StorageFile> files = await Storage.GetPhotos();
 
             // Read Geotag of images
             foreach (var file in files)

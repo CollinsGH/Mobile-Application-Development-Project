@@ -123,4 +123,7 @@
   <data name="uidNavMap.Content" xml:space="preserve">
     <value>View Map</value>
   </data>
+  <data name="uidPhotos.Text" xml:space="preserve">
+    <value>Photos</value>
+  </data>
 </root>

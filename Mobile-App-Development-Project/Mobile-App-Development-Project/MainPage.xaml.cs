@@ -5,6 +5,7 @@ using System.Linq;
 using System.Runtime.InteropServices.WindowsRuntime;
 using Windows.Foundation;
 using Windows.Foundation.Collections;
+using Windows.Storage;
 using Windows.UI.Xaml;
 using Windows.UI.Xaml.Controls;
 using Windows.UI.Xaml.Controls.Primitives;
@@ -22,9 +23,25 @@ namespace Mobile_App_Development_Project
     /// </summary>
     public sealed partial class MainPage : Page
     {
+        private IReadOnlyList<StorageFile> _photos;
+
         public MainPage()
         {
             this.InitializeComponent();
+        }
+
+        protected override async void OnNavigatedTo(NavigationEventArgs e)
+        {
+            // Get all photos
+            _photos = await Storage.GetPhotos();
+
+            DisplayPhotos();
+        }
+
+        private void DisplayPhotos()
+        {
+            // Display all photos in _photos variable in the grdAlbum grid
+
         }
 
         private void btnNavCamera_Tapped(object sender, TappedRoutedEventArgs e)
