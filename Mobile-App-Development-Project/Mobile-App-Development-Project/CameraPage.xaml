@@ -7,8 +7,22 @@
     xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
     mc:Ignorable="d">
 
+    <Page.Resources>
+        <Storyboard x:Name="captureButtonStoryboard">
+            <DoubleAnimation Storyboard.TargetName="elCapture"
+                             Storyboard.TargetProperty="Opacity"
+                             From="1.0" To="0.8" Duration="0:0:1"
+                             AutoReverse="True"/>
+
+            <DoubleAnimation Storyboard.TargetName="PreviewControl"
+                             Storyboard.TargetProperty="Opacity"
+                             From="1.0" To="0" Duration="0:0:1"
+                             AutoReverse="True"/>
+            </Storyboard>
+    </Page.Resources>
+
     <Grid Background="{ThemeResource ApplicationPageBackgroundThemeBrush}">
-        <CaptureElement Name="PreviewControl" Stretch="Uniform"/>
+        <CaptureElement x:Name="PreviewControl" Stretch="Uniform"/>
 
         <!-- Menu -->
         <StackPanel Orientation="Horizontal" VerticalAlignment="Bottom" Padding="5" HorizontalAlignment="Center">

@@ -11,9 +11,6 @@
                 <ResourceDictionary x:Key="Default">
                     <Color x:Key="PrimaryColor">#000000</Color>
                     <SolidColorBrush x:Key="ApplicationPageBackgroundThemeBrush" Color="{ThemeResource PrimaryColor}" />
-
-                    <Color x:Key="SecondaryColor">#CCCCCC</Color>
-                    <SolidColorBrush x:Key="SecondaryThemeBrush" Color="{ThemeResource SecondaryColor}" />
                 </ResourceDictionary>
             </ResourceDictionary.ThemeDictionaries>
         </ResourceDictionary>

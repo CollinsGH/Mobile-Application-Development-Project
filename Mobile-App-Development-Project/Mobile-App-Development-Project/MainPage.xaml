@@ -20,7 +20,6 @@
             </Grid.ColumnDefinitions>
 
             <!-- Page Title -->
-            <Rectangle Grid.Row="0" Grid.Column="0" Fill="{ThemeResource SecondaryThemeBrush}"/>
             <TextBlock x:Name="tblPhotos" x:Uid="uidPhotos" Grid.Row="0" Grid.Column="0" Foreground="White" FontSize="24" Padding="10"/>
             
             <!-- Photo album -->
@@ -29,10 +28,20 @@
             </ScrollViewer>
             
             <!-- Menu -->
-            <Rectangle Grid.Row="2" Grid.Column="0" Fill="{ThemeResource SecondaryThemeBrush}"/>
-            <StackPanel Grid.Row="2" Grid.Column="0" HorizontalAlignment="Right" Padding="10">
-                <Button x:Name="btnNavCamera" x:Uid="uidNavCamera" Content="Camera" Width="200" Margin="0, 2" Tapped="btnNavCamera_Tapped"/>
-                <Button x:Name="btnNavMap" x:Uid="uidNavMap" Content="Map" Width="200" Margin="0, 2" Tapped="btnNavMap_Tapped"/>
+            <StackPanel Grid.Row="2" Grid.Column="0" Orientation="Horizontal" HorizontalAlignment="Center" Padding="5">
+                <!-- Camera navigation button -->
+                <Rectangle x:Name="rctNavCamera" Width="75" Height="75" Margin="4" Tapped="rctNavCamera_Tapped">
+                    <Rectangle.Fill>
+                        <ImageBrush ImageSource="Images/camera-nav-icon.png" />
+                    </Rectangle.Fill>
+                </Rectangle>
+
+                <!-- Camera navigation button -->
+                <Rectangle x:Name="rctNavMap" Width="75" Height="75" Margin="4" Tapped="rctNavMap_Tapped">
+                    <Rectangle.Fill>
+                        <ImageBrush ImageSource="Images/map-nav-icon.png" />
+                    </Rectangle.Fill>
+                </Rectangle>
             </StackPanel>
         </Grid>
     </Grid>

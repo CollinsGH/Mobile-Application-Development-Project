@@ -34,10 +34,10 @@ The main page of this application contains an album displaying all the users pho
 The image page displays a full size version of a particular image.
 
 #### Camera
-The camera aspect of this project required both the Camera and Microphone capabilities in the manifest file. When the camera page is opened a preview of the camera is shown.
+The camera aspect of this project required both the Camera and Microphone capabilities in the manifest file. When the camera page is opened a preview of the camera is shown. At the bottom of the page is a back button, which brings the user back to the main page, and capture button, which takes a picture. When the capture button is clicked both the preview control and capture button fades to inform the user the picture was taken.
 
 #### Map
-I choose to use Bing Maps for the map aspect of this project. An application key was required to use Bing Maps. When the map page loads a list of photos is retrieved. The Geotag metadata is then extracted from the image files and are plotted on the map.
+I choose to use Bing Maps for the map aspect of this project. An application key was required to use Bing Maps. When the map page loads a list of photos is retrieved. The Geotag metadata is then extracted from the image files and are plotted on the map. If a map icon, the respective photo is displayed in the top right of the screen.
 
 ### Why will the user open this app for a second time?
 

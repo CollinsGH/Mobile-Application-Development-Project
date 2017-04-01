@@ -1,8 +1,10 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.Diagnostics;
 using System.IO;
 using System.Linq;
 using System.Runtime.InteropServices.WindowsRuntime;
+using System.Threading.Tasks;
 using Windows.Foundation;
 using Windows.Foundation.Collections;
 using Windows.Storage;
@@ -25,24 +27,56 @@ namespace Mobile_App_Development_Project
     /// </summary>
     public sealed partial class MainPage : Page
     {
-        private IReadOnlyList<StorageFile> _photos;
+        private LinkedList<Image> _images;
 
         public MainPage()
         {
             this.InitializeComponent();
+
+            _images = new LinkedList<Image>();
+            grdAlbum.SizeChanged += GrdAlbum_SizeChanged;
+        }
+
+        private void GrdAlbum_SizeChanged(object sender, SizeChangedEventArgs e)
+        {
+            // Recalculate the grdAlbum cells when it is resized
+            DisplayPhotos();
         }
 
         protected override async void OnNavigatedTo(NavigationEventArgs e)
         {
-            // Get all photos
-            _photos = await Storage.GetPhotos();
-
+            await CreateImageControls();
             DisplayPhotos();
         }
 
-        private async void DisplayPhotos()
+        private async Task CreateImageControls()
         {
-            // Display all photos in _photos variable in the grdAlbum grid
+            IReadOnlyList<StorageFile> photos = await Storage.GetPhotos();
+
+            foreach (StorageFile photo in photos)
+            {
+                // Create image control
+                BitmapImage bitmapImage = new BitmapImage();
+                FileRandomAccessStream stream = (FileRandomAccessStream)await photo.OpenAsync(FileAccessMode.Read);
+                bitmapImage.SetSource(stream);
+
+                Image image = new Image();
+                image.Source = bitmapImage;
+                image.Margin = new Thickness(1);
+                image.Tapped += Image_Tapped;
+
+                _images.AddLast(image);
+            }
+        }
+
+        private void DisplayPhotos()
+        {
+            // Remove all rows, columns and children from grdAlbum
+            grdAlbum.Children.Clear();
+            grdAlbum.RowDefinitions.Clear();
+            grdAlbum.ColumnDefinitions.Clear();
+
+            // Display all photos in the grdAlbum grid
 
             // Calculate the number of columns based on screen width
             const int MAX_IMAGE_WIDTH = 200;
@@ -57,7 +91,7 @@ namespace Mobile_App_Development_Project
             }
 
             // Calculate the number of rows by deviding the total number of photos by columns
-            int rows = (int)Math.Ceiling((float)_photos.Count / columns);
+            int rows = (int)Math.Ceiling((float)_images.Count / columns);
 
             // Create the resulting number of rows and columns and add them to the grid
             for (int row = 0; row < rows; row++)
@@ -75,18 +109,8 @@ namespace Mobile_App_Development_Project
             // Add photos to grid
             int i = 0;
 
-            foreach (StorageFile photo in _photos)
+            foreach (Image image in _images)
             {
-                // Create image control
-                BitmapImage bitmapImage = new BitmapImage();
-                FileRandomAccessStream stream = (FileRandomAccessStream)await photo.OpenAsync(FileAccessMode.Read);
-                bitmapImage.SetSource(stream);
-                
-                Image image = new Image();
-                image.Source = bitmapImage;
-                image.Margin = new Thickness(1);
-                image.Tapped += Image_Tapped;
-
                 // Add to grdAlbum
                 Grid.SetColumn(image, i % columns);
                 Grid.SetRow(image, i / columns);
@@ -102,13 +126,13 @@ namespace Mobile_App_Development_Project
             Frame.Navigate(typeof(ImagePage), (Image)sender);
         }
 
-        private void btnNavCamera_Tapped(object sender, TappedRoutedEventArgs e)
+        private void rctNavCamera_Tapped(object sender, TappedRoutedEventArgs e)
         {
             // Navigate to the CameraPage
             Frame.Navigate(typeof(CameraPage));
         }
 
-        private void btnNavMap_Tapped(object sender, TappedRoutedEventArgs e)
+        private void rctNavMap_Tapped(object sender, TappedRoutedEventArgs e)
         {
             // Navigate to the MapPage
             Frame.Navigate(typeof(MapPage));

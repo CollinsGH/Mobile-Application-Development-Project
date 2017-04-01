@@ -152,6 +152,8 @@ namespace Mobile_App_Development_Project
         // Adapted from https://docs.microsoft.com/en-us/windows/uwp/audio-video-camera/basic-photo-video-and-audio-capture-with-mediacapture
         private async void elCapture_Tapped(object sender, TappedRoutedEventArgs e)
         {
+            captureButtonStoryboard.Begin();
+
             String imageName = DateTime.Now.ToString("yyyyMMddHHmmss");
 
             var myPictures = await StorageLibrary.GetLibraryAsync(KnownLibraryId.Pictures);
