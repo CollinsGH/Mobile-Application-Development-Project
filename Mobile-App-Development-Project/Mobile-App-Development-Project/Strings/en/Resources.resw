@@ -120,4 +120,10 @@
   <data name="uidPhotos.Text" xml:space="preserve">
     <value>Photos</value>
   </data>
+  <data name="uidShareDescription" xml:space="preserve">
+    <value>Share this photo with others</value>
+  </data>
+  <data name="uidShareTitle" xml:space="preserve">
+    <value>Share Photo</value>
+  </data>
 </root>

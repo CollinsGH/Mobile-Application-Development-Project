@@ -5,6 +5,7 @@ using System.IO;
 using System.Linq;
 using System.Runtime.InteropServices.WindowsRuntime;
 using Windows.ApplicationModel.DataTransfer;
+using Windows.ApplicationModel.Resources.Core;
 using Windows.Foundation;
 using Windows.Foundation.Collections;
 using Windows.Storage;
@@ -75,8 +76,14 @@ namespace Mobile_App_Development_Project
         private void ShareImageHandler(DataTransferManager sender, DataRequestedEventArgs e)
         {
             DataRequest request = e.Request;
-            request.Data.Properties.Title = "Share";
-            request.Data.Properties.Description = "Share this photo.";
+
+            ResourceCandidate resource;
+
+            resource = ResourceManager.Current.MainResourceMap.GetValue("Resources/uidShareTitle", ResourceContext.GetForCurrentView());
+            request.Data.Properties.Title = resource.ValueAsString;
+
+            resource = ResourceManager.Current.MainResourceMap.GetValue("Resources/uidShareDescription", ResourceContext.GetForCurrentView());
+            request.Data.Properties.Description = resource.ValueAsString;
 
             // Because we are making async calls in the DataRequested event handler,
             //  we need to get the deferral first.
