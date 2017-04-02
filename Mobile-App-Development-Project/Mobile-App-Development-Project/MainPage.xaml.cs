@@ -27,6 +27,7 @@ namespace Mobile_App_Development_Project
     /// </summary>
     public sealed partial class MainPage : Page
     {
+        private IReadOnlyList<IStorageFile> _photos;
         private LinkedList<Image> _images;
 
         public MainPage()
@@ -51,9 +52,9 @@ namespace Mobile_App_Development_Project
 
         private async Task CreateImageControls()
         {
-            IReadOnlyList<StorageFile> photos = await Storage.GetPhotos();
+            _photos = await Storage.GetPhotos();
 
-            foreach (StorageFile photo in photos)
+            foreach (StorageFile photo in _photos)
             {
                 // Create image control
                 BitmapImage bitmapImage = new BitmapImage();
@@ -122,8 +123,12 @@ namespace Mobile_App_Development_Project
 
         private void Image_Tapped(object sender, TappedRoutedEventArgs e)
         {
+            Image image = (Image)sender;
+
+            int index = Grid.GetRow(image) * grdAlbum.ColumnDefinitions.Count + Grid.GetColumn(image);
+
             // Navigate to the ImagePage and pass the image as the parameter
-            Frame.Navigate(typeof(ImagePage), (Image)sender);
+            Frame.Navigate(typeof(ImagePage), _photos[index]);
         }
 
         private void rctNavCamera_Tapped(object sender, TappedRoutedEventArgs e)

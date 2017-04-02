@@ -18,6 +18,13 @@
                     <ImageBrush ImageSource="Images/back-arrow-icon.png" />
                 </Ellipse.Fill>
             </Ellipse>
+
+            <!-- Share button -->
+            <Rectangle x:Name="rctShare" Width="50" Height="50" Margin="4" Tapped="rctShare_Tapped">
+                <Rectangle.Fill>
+                    <ImageBrush ImageSource="Images/share-icon.png" />
+                </Rectangle.Fill>
+            </Rectangle>
         </StackPanel>
     </Grid>
 </Page>

@@ -12,7 +12,7 @@ namespace Mobile_App_Development_Project
     {
         public static async Task<IReadOnlyList<StorageFile>> GetPhotos()
         {
-            QueryOptions queryOption = new QueryOptions(CommonFileQuery.OrderByTitle, new string[] { ".jpg" });
+            QueryOptions queryOption = new QueryOptions(CommonFileQuery.OrderByDate, new string[] { ".jpg" });
 
             queryOption.FolderDepth = FolderDepth.Deep;
 
