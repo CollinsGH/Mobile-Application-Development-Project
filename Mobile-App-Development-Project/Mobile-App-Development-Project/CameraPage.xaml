@@ -22,23 +22,67 @@
     </Page.Resources>
 
     <Grid Background="{ThemeResource ApplicationPageBackgroundThemeBrush}">
-        <CaptureElement x:Name="PreviewControl" Stretch="Uniform"/>
+        <SplitView x:Name="svSettings" DisplayMode="Overlay" OpenPaneLength="300">
+            <SplitView.Pane>
+                <!-- Time picker control for timer -->
+                <Grid Padding="10">
+                    <Grid.RowDefinitions>
+                        <RowDefinition/>
+                    </Grid.RowDefinitions>
 
-        <!-- Menu -->
-        <StackPanel Orientation="Horizontal" VerticalAlignment="Bottom" Padding="5" HorizontalAlignment="Center">
-            <!-- Back button -->
-            <Ellipse x:Name="elBack" Width="50" Height="50" Margin="4" Tapped="elBack_Tapped">
-                <Ellipse.Fill>
-                    <ImageBrush ImageSource="Images/back-arrow-icon.png" />
-                </Ellipse.Fill>
-            </Ellipse>
-            
-            <!-- Capture button -->
-            <Ellipse x:Name="elCapture" Width="75" Height="75" Margin="4" Tapped="elCapture_Tapped">
-                <Ellipse.Fill>
-                    <ImageBrush ImageSource="Images/camera-icon.png" />
-                </Ellipse.Fill>
-            </Ellipse>
-        </StackPanel>
+                    <Grid.ColumnDefinitions>
+                        <ColumnDefinition/>
+                        <ColumnDefinition/>
+                    </Grid.ColumnDefinitions>
+                    
+                    <!-- Timer -->
+                    <TextBlock Grid.Row="0" Grid.Column="0" Text="Timer" FontSize="24"/>
+                    <ComboBox x:Name="cbTimer" Grid.Row="0" Grid.Column="1" SelectionChanged="cbTimer_SelectionChanged">
+                        <ComboBoxItem Content="None" IsSelected="True"/>
+                        <ComboBoxItem Content="5"/>
+                        <ComboBoxItem Content="10"/>
+                        <ComboBoxItem Content="15"/>
+                        <ComboBoxItem Content="30"/>
+                        <ComboBoxItem Content="45"/>
+                        <ComboBoxItem Content="60"/>
+                    </ComboBox>
+                </Grid>
+            </SplitView.Pane>
+
+            <SplitView.Content>
+                <Grid>
+                    <CaptureElement x:Name="PreviewControl" Stretch="Uniform"/>
+
+                    <!-- Menu -->
+                    <StackPanel Orientation="Horizontal" VerticalAlignment="Bottom" Padding="5" HorizontalAlignment="Center">
+                        <!-- Back button -->
+                        <Ellipse x:Name="elBack" Width="50" Height="50" Margin="4" Tapped="elBack_Tapped">
+                            <Ellipse.Fill>
+                                <ImageBrush ImageSource="Images/back-arrow-icon.png" />
+                            </Ellipse.Fill>
+                        </Ellipse>
+
+                        <!-- Capture button -->
+                        <Ellipse x:Name="elCapture" Width="75" Height="75" Margin="4" Tapped="elCapture_Tapped">
+                            <Ellipse.Fill>
+                                <ImageBrush ImageSource="Images/camera-icon.png" />
+                            </Ellipse.Fill>
+                        </Ellipse>
+
+                        <!-- Settings button -->
+                        <Ellipse x:Name="elSettings" Width="50" Height="50" Margin="4" Tapped="elSettings_Tapped">
+                            <Ellipse.Fill>
+                                <ImageBrush ImageSource="Images/settings-icon.png" />
+                            </Ellipse.Fill>
+                        </Ellipse>
+                    </StackPanel>
+
+                    <!-- Timer overlay canvas -->
+                    <Grid x:Name="grdTimer" Background="{ThemeResource ApplicationPageBackgroundThemeBrush}" Opacity="0.8">
+                        <TextBlock x:Name="tblTimer" Text="0" FontSize="80" Foreground="Red" HorizontalAlignment="Center" VerticalAlignment="Center"/>
+                    </Grid>
+                </Grid>
+            </SplitView.Content>
+        </SplitView>
     </Grid>
 </Page>

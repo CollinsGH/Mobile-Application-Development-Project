@@ -43,16 +43,48 @@ namespace Mobile_App_Development_Project
 
         private Geolocator _geo;
 
+        private AppSettings _settings;
+        private DispatcherTimer _timer;
+        private int _remainingTime;
+
         public CameraPage()
         {
             this.InitializeComponent();
 
+            // Create a new dispatch timer and add an event handler for the Tick event
+            _timer = new DispatcherTimer();
+            _timer.Tick += _timer_Tick;
+
+            LoadSettings();
+
             this.Loaded += CameraPage_Loaded;
             Application.Current.Suspending += Application_Suspending;
+        }
+        
+        private void LoadSettings()
+        {
+            try
+            {
+                // Load the application settings
+                _settings = Storage.ReadSettingsFromIsoStorage();
+            }
+            catch (Exception ex)
+            {
+                // If an exception occurred, for example the file could not be opened
+                // output the error message and create a new AppSettings object
+                Debug.WriteLine(ex.Message);
+                _settings = new AppSettings();
+            }
         }
 
         private async void CameraPage_Loaded(object sender, RoutedEventArgs e)
         {
+            // Hide the timer grid
+            grdTimer.Visibility = Visibility.Collapsed;
+
+            // Setup settings controls
+            SetSettingControls();
+
             // Initialise GeoLocator
             var access = await Geolocator.RequestAccessAsync();
 
@@ -66,6 +98,22 @@ namespace Mobile_App_Development_Project
                     // There was a problem initialising GeoLocator
                     // Show an error to the user
                     break;
+            }
+        }
+
+        private void SetSettingControls()
+        {
+            // Set the timer combo box selected item
+            // If the timer is set to zero don't change it because it will be set to "None" by default
+            if (_settings.Timer != 0) {
+                ItemCollection items = cbTimer.Items;
+
+                foreach (ComboBoxItem item in items) {
+                    if (item.Content.Equals(_settings.Timer.ToString())) {
+                        cbTimer.SelectedValue = item;
+                        break;
+                    }
+                }
             }
         }
 
@@ -150,10 +198,51 @@ namespace Mobile_App_Development_Project
 
         // Capture a photo to a file
         // Adapted from https://docs.microsoft.com/en-us/windows/uwp/audio-video-camera/basic-photo-video-and-audio-capture-with-mediacapture
-        private async void elCapture_Tapped(object sender, TappedRoutedEventArgs e)
+        private void elCapture_Tapped(object sender, TappedRoutedEventArgs e)
+        {
+            // Check timer value in AppSettings object
+            if (_settings.Timer > 0)
+            {
+                _remainingTime = _settings.Timer;
+
+                // Show timer grid
+                tblTimer.Text = _remainingTime.ToString();
+                grdTimer.Visibility = Visibility.Visible;
+
+                _timer.Interval = TimeSpan.FromSeconds(1);
+                _timer.Start();
+            } else
+            {
+                // If the timer is set to zero then just take the photo
+                TakePhoto();
+            }
+        }
+
+        private void _timer_Tick(object sender, object e)
+        {
+            // Decrement timer
+            _remainingTime--;
+
+            // Update timer text
+            tblTimer.Text = _remainingTime.ToString();
+
+            if (_remainingTime <= 0)
+            {
+                // Stop the timer
+                _timer.Stop();
+
+                // Hide timer grid
+                grdTimer.Visibility = Visibility.Collapsed;
+
+                // Take the photo
+                TakePhoto();
+            }
+        }
+
+        private async void TakePhoto()
         {
             captureButtonStoryboard.Begin();
-
+            
             String imageName = DateTime.Now.ToString("yyyyMMddHHmmss");
 
             var myPictures = await StorageLibrary.GetLibraryAsync(KnownLibraryId.Pictures);
@@ -174,7 +263,7 @@ namespace Mobile_App_Development_Project
 
                     await encoder.BitmapProperties.SetPropertiesAsync(properties);
                     await encoder.FlushAsync();
-                    
+
                     GeoTagImageFile(file);
                 }
             }
@@ -192,6 +281,32 @@ namespace Mobile_App_Development_Project
         {
             // Navigate back to the MainPage
             Frame.Navigate(typeof(MainPage));
+        }
+
+        private void elSettings_Tapped(object sender, TappedRoutedEventArgs e)
+        {
+            svSettings.IsPaneOpen = true;
+        }
+
+        private void cbTimer_SelectionChanged(object sender, SelectionChangedEventArgs e)
+        {
+            if (_settings != null) {
+                string selectedItem = (cbTimer.SelectedItem as ComboBoxItem).Content.ToString();
+                int timeInSeconds;
+
+                // Parse the time from the selected item string
+                if (int.TryParse(selectedItem, out timeInSeconds))
+                {
+                    _settings.Timer = timeInSeconds;
+                } else
+                {
+                    // If the time cannot be parsed set the timer to zero
+                    _settings.Timer = 0;
+                }
+
+                // Update settings file
+                Storage.SaveSettingsInIsoStorage(_settings);
+            }
         }
     }
 }
