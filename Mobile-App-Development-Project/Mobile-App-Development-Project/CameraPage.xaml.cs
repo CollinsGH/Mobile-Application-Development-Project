@@ -126,16 +126,22 @@ namespace Mobile_App_Development_Project
 
         private async void Current_EnteredBackground(object sender, EnteredBackgroundEventArgs e)
         {
-            var deferral = e.GetDeferral();
-            await CleanupCameraAsync();
-            deferral.Complete();
+            if (Frame.CurrentSourcePageType == typeof(CameraPage))
+            {
+                var deferral = e.GetDeferral();
+                await CleanupCameraAsync();
+                deferral.Complete();
+            }
         }
 
         private async void Current_LeavingBackground(object sender, LeavingBackgroundEventArgs e)
         {
-            var deferral = e.GetDeferral();
-            await StartPreviewAsync();
-            deferral.Complete();
+            if (Frame.CurrentSourcePageType == typeof(CameraPage))
+            {
+                var deferral = e.GetDeferral();
+                await StartPreviewAsync();
+                deferral.Complete();
+            }
         }
         
         protected async override void OnNavigatedTo(NavigationEventArgs e)
@@ -254,10 +260,7 @@ namespace Mobile_App_Development_Project
         {
             captureButtonStoryboard.Begin();
             
-            String imageName = DateTime.Now.ToString("yyyyMMddHHmmss");
-
-            var myPictures = await StorageLibrary.GetLibraryAsync(KnownLibraryId.Pictures);
-            StorageFile file = await myPictures.SaveFolder.CreateFileAsync(imageName + ".jpg", CreationCollisionOption.GenerateUniqueName);
+            StorageFile file = await Storage.CreateNewFile();
 
             using (var captureStream = new InMemoryRandomAccessStream())
             {
@@ -324,8 +327,6 @@ namespace Mobile_App_Development_Project
 
         private async void tsLocation_Toggled(object sender, RoutedEventArgs e)
         {
-            Debug.WriteLine(tsLocation.IsOn);
-
             _settings.IsLocationActivated = tsLocation.IsOn;
 
             // Update settings file

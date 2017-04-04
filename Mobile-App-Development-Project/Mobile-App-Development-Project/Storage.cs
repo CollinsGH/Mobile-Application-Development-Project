@@ -15,8 +15,20 @@ namespace Mobile_App_Development_Project
     public class Storage
     {
         private const string SETTINGS_FILENAME = "settings.json";
+        private const string FOLDER_NAME = "TravelCam";
 
-        // Retrieve and return all photos from the pictures library 
+        // Create a new file in the folder for this application in the pictures library
+        public static async Task<StorageFile> CreateNewFile()
+        {
+            String imageName = DateTime.Now.ToString("yyyyMMddHHmmss");
+
+            StorageFolder folder = await KnownFolders.PicturesLibrary.CreateFolderAsync(FOLDER_NAME, CreationCollisionOption.OpenIfExists);
+            StorageFile file = await folder.CreateFileAsync(imageName + ".jpg", CreationCollisionOption.GenerateUniqueName);
+
+            return file;
+        }
+
+        // Retrieve and return all photos from this applications folder in pictures library 
         public static async Task<IReadOnlyList<StorageFile>> GetPhotos()
         {
             QueryOptions queryOption = new QueryOptions(CommonFileQuery.OrderByDate, new string[] { ".jpg" });
@@ -25,9 +37,12 @@ namespace Mobile_App_Development_Project
 
             Queue<IStorageFolder> folders = new Queue<IStorageFolder>();
 
-            return await KnownFolders.PicturesLibrary.CreateFileQueryWithOptions(queryOption).GetFilesAsync();
+            StorageFolder folder = await KnownFolders.PicturesLibrary.CreateFolderAsync(FOLDER_NAME, CreationCollisionOption.OpenIfExists);
+
+            return await folder.CreateFileQueryWithOptions(queryOption).GetFilesAsync();
         }
 
+        // Save the AppSettings object to isolated storage as a JSON file
         public static void SaveSettingsInIsoStorage(AppSettings settings)
         {
             IsolatedStorageFile applicationStorageFileForUser = IsolatedStorageFile.GetUserStoreForApplication();
@@ -48,6 +63,7 @@ namespace Mobile_App_Development_Project
             }
         }
 
+        // Read the settings file in isolated storage and convert it to an AppSettings object
         public static AppSettings ReadSettingsFromIsoStorage()
         {
             IsolatedStorageFile applicationStorageFileForUser = IsolatedStorageFile.GetUserStoreForApplication();

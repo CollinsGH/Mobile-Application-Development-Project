@@ -11,12 +11,12 @@
         <Storyboard x:Name="captureButtonStoryboard">
             <DoubleAnimation Storyboard.TargetName="elCapture"
                              Storyboard.TargetProperty="Opacity"
-                             From="1.0" To="0.8" Duration="0:0:1"
+                             From="1.0" To="0.8" Duration="0:0:0.5"
                              AutoReverse="True"/>
 
             <DoubleAnimation Storyboard.TargetName="PreviewControl"
                              Storyboard.TargetProperty="Opacity"
-                             From="1.0" To="0" Duration="0:0:1"
+                             From="1.0" To="0" Duration="0:0:0.1"
                              AutoReverse="True"/>
             </Storyboard>
     </Page.Resources>

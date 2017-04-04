@@ -9,6 +9,7 @@ using Windows.Foundation;
 using Windows.Foundation.Collections;
 using Windows.Storage;
 using Windows.Storage.Streams;
+using Windows.UI.Core;
 using Windows.UI.Xaml;
 using Windows.UI.Xaml.Controls;
 using Windows.UI.Xaml.Controls.Primitives;
@@ -46,8 +47,12 @@ namespace Mobile_App_Development_Project
 
         protected override async void OnNavigatedTo(NavigationEventArgs e)
         {
-            await CreateImageControls();
-            DisplayPhotos();
+            // Asynchronously populate the grid of images
+            await Dispatcher.RunAsync(CoreDispatcherPriority.Normal, async () =>
+            {
+                await CreateImageControls();
+                DisplayPhotos();
+            });
         }
 
         private async Task CreateImageControls()
