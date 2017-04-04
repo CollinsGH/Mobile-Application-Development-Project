@@ -27,7 +27,8 @@
                 <!-- Time picker control for timer -->
                 <Grid Padding="10">
                     <Grid.RowDefinitions>
-                        <RowDefinition/>
+                        <RowDefinition Height="Auto"/>
+                        <RowDefinition Height="Auto"/>
                     </Grid.RowDefinitions>
 
                     <Grid.ColumnDefinitions>
@@ -36,7 +37,7 @@
                     </Grid.ColumnDefinitions>
                     
                     <!-- Timer -->
-                    <TextBlock Grid.Row="0" Grid.Column="0" Text="Timer" FontSize="24"/>
+                    <TextBlock Grid.Row="0" Grid.Column="0" x:Uid="uidTimer" Text="Timer" FontSize="24"/>
                     <ComboBox x:Name="cbTimer" Grid.Row="0" Grid.Column="1" SelectionChanged="cbTimer_SelectionChanged">
                         <ComboBoxItem Content="None" IsSelected="True"/>
                         <ComboBoxItem Content="5"/>
@@ -46,6 +47,10 @@
                         <ComboBoxItem Content="45"/>
                         <ComboBoxItem Content="60"/>
                     </ComboBox>
+                    
+                    <!-- Location toggle -->
+                    <TextBlock Grid.Row="1" Grid.Column="0" x:Uid="uidLocation" Text="Location" FontSize="24"/>
+                    <ToggleSwitch x:Name="tsLocation" Grid.Row="1" Grid.Column="1" Toggled="tsLocation_Toggled"/>
                 </Grid>
             </SplitView.Pane>
 

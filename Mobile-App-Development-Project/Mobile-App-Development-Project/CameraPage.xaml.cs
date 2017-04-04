@@ -58,9 +58,12 @@ namespace Mobile_App_Development_Project
             LoadSettings();
 
             this.Loaded += CameraPage_Loaded;
-            Application.Current.Suspending += Application_Suspending;
+            //Application.Current.Resuming += Application_Resuming;
+            //Application.Current.Suspending += Application_Suspending;
+            Application.Current.EnteredBackground += Current_EnteredBackground;
+            Application.Current.LeavingBackground += Current_LeavingBackground;
         }
-        
+
         private void LoadSettings()
         {
             try
@@ -77,31 +80,16 @@ namespace Mobile_App_Development_Project
             }
         }
 
-        private async void CameraPage_Loaded(object sender, RoutedEventArgs e)
+        private void CameraPage_Loaded(object sender, RoutedEventArgs e)
         {
             // Hide the timer grid
             grdTimer.Visibility = Visibility.Collapsed;
 
             // Setup settings controls
-            SetSettingControls();
-
-            // Initialise GeoLocator
-            var access = await Geolocator.RequestAccessAsync();
-
-            switch (access)
-            {
-                case GeolocationAccessStatus.Allowed:
-                    _geo = new Geolocator();
-                    _geo.DesiredAccuracy = PositionAccuracy.Default;
-                    break;
-                default:
-                    // There was a problem initialising GeoLocator
-                    // Show an error to the user
-                    break;
-            }
+            SetupSettingControls();
         }
 
-        private void SetSettingControls()
+        private void SetupSettingControls()
         {
             // Set the timer combo box selected item
             // If the timer is set to zero don't change it because it will be set to "None" by default
@@ -114,9 +102,17 @@ namespace Mobile_App_Development_Project
                         break;
                     }
                 }
+
+                tsLocation.IsOn = _settings.IsLocationActivated;
             }
         }
 
+        /*
+        private async void Application_Resuming(object sender, object e)
+        {
+            await StartPreviewAsync();
+        }
+        
         private async void Application_Suspending(object sender, SuspendingEventArgs e)
         {
             // Handle global application events only if this page is active
@@ -126,6 +122,20 @@ namespace Mobile_App_Development_Project
                 await CleanupCameraAsync();
                 deferral.Complete();
             }
+        }*/
+
+        private async void Current_EnteredBackground(object sender, EnteredBackgroundEventArgs e)
+        {
+            var deferral = e.GetDeferral();
+            await CleanupCameraAsync();
+            deferral.Complete();
+        }
+
+        private async void Current_LeavingBackground(object sender, LeavingBackgroundEventArgs e)
+        {
+            var deferral = e.GetDeferral();
+            await StartPreviewAsync();
+            deferral.Complete();
         }
         
         protected async override void OnNavigatedTo(NavigationEventArgs e)
@@ -166,7 +176,7 @@ namespace Mobile_App_Development_Project
             }
             catch (Exception ex)
             {
-                Debug.WriteLine("MediaCapture initialization failed. {0}", ex.Message);
+                Debug.WriteLine("MediaCapture initialization failed: " + ex.Message);
             }
         }
 
@@ -177,6 +187,7 @@ namespace Mobile_App_Development_Project
                 // If previewing, stop
                 if (_isPreviewing)
                 {
+                    _isPreviewing = false;
                     await _mediaCapture.StopPreviewAsync();
                 }
 
@@ -264,7 +275,9 @@ namespace Mobile_App_Development_Project
                     await encoder.BitmapProperties.SetPropertiesAsync(properties);
                     await encoder.FlushAsync();
 
-                    GeoTagImageFile(file);
+                    if (tsLocation.IsOn) {
+                        GeoTagImageFile(file);
+                    }
                 }
             }
         }
@@ -306,6 +319,34 @@ namespace Mobile_App_Development_Project
 
                 // Update settings file
                 Storage.SaveSettingsInIsoStorage(_settings);
+            }
+        }
+
+        private async void tsLocation_Toggled(object sender, RoutedEventArgs e)
+        {
+            Debug.WriteLine(tsLocation.IsOn);
+
+            _settings.IsLocationActivated = tsLocation.IsOn;
+
+            // Update settings file
+            Storage.SaveSettingsInIsoStorage(_settings);
+
+            if (tsLocation.IsOn && _geo == null)
+            {
+                // Initialise GeoLocator
+                var access = await Geolocator.RequestAccessAsync();
+
+                switch (access)
+                {
+                    case GeolocationAccessStatus.Allowed:
+                        _geo = new Geolocator();
+                        _geo.DesiredAccuracy = PositionAccuracy.Default;
+                        break;
+                    default:
+                        // There was a problem initialising GeoLocator
+                        // Show an error to the user
+                        break;
+                }
             }
         }
     }
