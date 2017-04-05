@@ -77,7 +77,6 @@ namespace Mobile_App_Development_Project
                 MemoryStream ms = new MemoryStream(Encoding.UTF8.GetBytes(json));
                 DataContractJsonSerializer ser = new DataContractJsonSerializer(settings.GetType());
                 settings = ser.ReadObject(ms) as AppSettings;
-                Debug.WriteLine(settings);
                 return settings;
             }
         }

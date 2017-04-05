@@ -32,14 +32,14 @@
                     </Grid.RowDefinitions>
 
                     <Grid.ColumnDefinitions>
-                        <ColumnDefinition/>
-                        <ColumnDefinition/>
+                        <ColumnDefinition Width="Auto"/>
+                        <ColumnDefinition Width="*"/>
                     </Grid.ColumnDefinitions>
                     
                     <!-- Timer -->
                     <TextBlock Grid.Row="0" Grid.Column="0" x:Uid="uidTimer" Text="Timer" FontSize="24"/>
                     <ComboBox x:Name="cbTimer" Grid.Row="0" Grid.Column="1" SelectionChanged="cbTimer_SelectionChanged">
-                        <ComboBoxItem Content="None" IsSelected="True"/>
+                        <ComboBoxItem x:Uid="uidNone" Content="None" IsSelected="True"/>
                         <ComboBoxItem Content="5"/>
                         <ComboBoxItem Content="10"/>
                         <ComboBoxItem Content="15"/>

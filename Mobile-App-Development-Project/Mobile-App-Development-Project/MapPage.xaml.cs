@@ -21,6 +21,7 @@ using System.Threading.Tasks;
 using Windows.Graphics.Imaging;
 using Windows.Storage.Streams;
 using Windows.UI.Xaml.Media.Imaging;
+using Windows.ApplicationModel.Resources.Core;
 
 // The Blank Page item template is documented at http://go.microsoft.com/fwlink/?LinkId=234238
 
@@ -50,6 +51,8 @@ namespace Mobile_App_Development_Project
         // Adapted from https://docs.microsoft.com/en-us/windows/uwp/maps-and-location/display-poi#add-a-mapicon
         private void AddPointsToMap()
         {
+            ResourceCandidate resource = ResourceManager.Current.MainResourceMap.GetValue("Resources/uidPhoto", ResourceContext.GetForCurrentView());
+
             int i = 0;
 
             // Create a MapIcon for each Geopoint in list
@@ -58,7 +61,7 @@ namespace Mobile_App_Development_Project
                 mapIcon.Location = point;
                 mapIcon.NormalizedAnchorPoint = new Point(0.5, 1.0);
                 mapIcon.ZIndex = 0;
-                mapIcon.Title = "Photo " + (i + 1);
+                mapIcon.Title = resource.ValueAsString + " " + (i + 1);
                 
                 // Add the MapIcon to the map
                 MapControl.MapElements.Add(mapIcon);

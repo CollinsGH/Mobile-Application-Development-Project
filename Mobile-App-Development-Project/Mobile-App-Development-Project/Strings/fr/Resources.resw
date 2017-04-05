@@ -118,10 +118,10 @@
     <value>System.Resources.ResXResourceWriter, System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
   </resheader>
   <data name="uidLocation.Text" xml:space="preserve">
-    <value>Location</value>
+    <value>Emplacement</value>
   </data>
   <data name="uidNone.Content" xml:space="preserve">
-    <value>None</value>
+    <value>Aucun</value>
   </data>
   <data name="uidPhoto" xml:space="preserve">
     <value>Photo</value>
@@ -130,12 +130,12 @@
     <value>Photos</value>
   </data>
   <data name="uidShareDescription" xml:space="preserve">
-    <value>Share this photo with others</value>
+    <value>Partagez Cette Photo Avec D'autres</value>
   </data>
   <data name="uidShareTitle" xml:space="preserve">
-    <value>Share Photo</value>
+    <value>Partager Photo</value>
   </data>
   <data name="uidTimer.Text" xml:space="preserve">
-    <value>Timer</value>
+    <value>Minuteur</value>
   </data>
 </root>

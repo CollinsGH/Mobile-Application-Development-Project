@@ -58,10 +58,14 @@ namespace Mobile_App_Development_Project
             LoadSettings();
 
             this.Loaded += CameraPage_Loaded;
-            //Application.Current.Resuming += Application_Resuming;
-            //Application.Current.Suspending += Application_Suspending;
+            
+            // Start/Stop preview on PC when window enters/leaves background
             Application.Current.EnteredBackground += Current_EnteredBackground;
             Application.Current.LeavingBackground += Current_LeavingBackground;
+
+            // Start/Stop preview on mobile when application is suspended/resumed
+            Application.Current.Resuming += Application_Resuming;
+            Application.Current.Suspending += Application_Suspending;
         }
 
         private void LoadSettings()
@@ -102,12 +106,12 @@ namespace Mobile_App_Development_Project
                         break;
                     }
                 }
-
-                tsLocation.IsOn = _settings.IsLocationActivated;
             }
+
+            // Set the location toggle switch
+            tsLocation.IsOn = _settings.IsLocationActivated;
         }
 
-        /*
         private async void Application_Resuming(object sender, object e)
         {
             await StartPreviewAsync();
@@ -122,7 +126,7 @@ namespace Mobile_App_Development_Project
                 await CleanupCameraAsync();
                 deferral.Complete();
             }
-        }*/
+        }
 
         private async void Current_EnteredBackground(object sender, EnteredBackgroundEventArgs e)
         {

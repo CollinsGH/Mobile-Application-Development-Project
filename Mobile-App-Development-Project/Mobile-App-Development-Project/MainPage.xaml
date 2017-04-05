@@ -23,7 +23,7 @@
             <TextBlock x:Name="tblPhotos" x:Uid="uidPhotos" Grid.Row="0" Grid.Column="0" Foreground="White" FontSize="24" Padding="10"/>
             
             <!-- Photo album -->
-            <ScrollViewer Grid.Row="1" Grid.Column="0">
+            <ScrollViewer Grid.Row="1" Grid.Column="0" VerticalScrollBarVisibility="Auto">
                 <Grid x:Name="grdAlbum" VerticalAlignment="Top"/>
             </ScrollViewer>
             

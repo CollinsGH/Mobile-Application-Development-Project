@@ -1,10 +1,10 @@
 ﻿<?xml version="1.0" encoding="utf-8"?>
 <Package xmlns="http://schemas.microsoft.com/appx/manifest/foundation/windows10" xmlns:mp="http://schemas.microsoft.com/appx/2014/phone/manifest" xmlns:uap="http://schemas.microsoft.com/appx/manifest/uap/windows10" IgnorableNamespaces="uap mp">
-  <Identity Name="ca6e5eb0-507a-479e-873e-cb83b6ea5e22" Publisher="CN=Keith" Version="1.0.0.0" />
+  <Identity Name="22252KeithWilliams.TravelCam" Publisher="CN=141762A9-ABE1-4CB3-B2A3-08DBF78A65D8" Version="1.1.1.0" />
   <mp:PhoneIdentity PhoneProductId="ca6e5eb0-507a-479e-873e-cb83b6ea5e22" PhonePublisherId="00000000-0000-0000-0000-000000000000" />
   <Properties>
-    <DisplayName>Mobile-App-Development-Project</DisplayName>
-    <PublisherDisplayName>Keith</PublisherDisplayName>
+    <DisplayName>Travel Cam</DisplayName>
+    <PublisherDisplayName>Keith Williams</PublisherDisplayName>
     <Logo>Assets\StoreLogo.png</Logo>
   </Properties>
   <Dependencies>
@@ -15,15 +15,14 @@
   </Resources>
   <Applications>
     <Application Id="App" Executable="$targetnametoken$.exe" EntryPoint="Mobile_App_Development_Project.App">
-      <uap:VisualElements DisplayName="Mobile-App-Development-Project" Square150x150Logo="Assets\Square150x150Logo.png" Square44x44Logo="Assets\Square44x44Logo.png" Description="Mobile-App-Development-Project" BackgroundColor="transparent">
-        <uap:DefaultTile Wide310x150Logo="Assets\Wide310x150Logo.png">
+      <uap:VisualElements DisplayName="Travel Cam" Square150x150Logo="Assets\Square150x150Logo.png" Square44x44Logo="Assets\Square44x44Logo.png" Description="This is the perfect camera/album app for you if you like to travel. Take pictures on the go and fill the world map with your experiences." BackgroundColor="transparent">
+        <uap:DefaultTile Wide310x150Logo="Assets\Wide310x150Logo.png" ShortName="Travel Cam">
         </uap:DefaultTile>
-        <uap:SplashScreen Image="Assets\SplashScreen.png" />
+        <uap:SplashScreen Image="Assets\SplashScreen.png" BackgroundColor="transparent" />
       </uap:VisualElements>
     </Application>
   </Applications>
   <Capabilities>
-    <Capability Name="internetClient" />
     <uap:Capability Name="picturesLibrary" />
     <DeviceCapability Name="webcam" />
     <DeviceCapability Name="microphone" />
