@@ -120,6 +120,9 @@
   <data name="uidLocation.Text" xml:space="preserve">
     <value>Emplacement</value>
   </data>
+  <data name="uidLocationError" xml:space="preserve">
+    <value>Assurez-vous Que Les Services De Localisation Sont Activés</value>
+  </data>
   <data name="uidNone.Content" xml:space="preserve">
     <value>Aucun</value>
   </data>

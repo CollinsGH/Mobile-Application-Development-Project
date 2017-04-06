@@ -25,6 +25,7 @@ using Windows.Storage.Streams;
 using Windows.Graphics.Imaging;
 using Windows.Storage.FileProperties;
 using Windows.Devices.Geolocation;
+using Windows.ApplicationModel.Resources.Core;
 
 // The Blank Page item template is documented at http://go.microsoft.com/fwlink/?LinkId=234238
 
@@ -269,33 +270,36 @@ namespace Mobile_App_Development_Project
 
         private async void TakePhoto()
         {
-            // Start the animation
-            captureButtonStoryboard.Begin();
+            if (_mediaCapture != null && _isPreviewing) {
+                // Start the animation
+                captureButtonStoryboard.Begin();
 
-            // Play the shutter sound
-            string filename = @"Sounds\camera-sound.mp3";
-            PlaySound(filename);
+                // Play the shutter sound
+                string filename = @"Sounds\camera-sound.mp3";
+                PlaySound(filename);
 
-            StorageFile file = await Storage.CreateNewFile();
+                StorageFile file = await Storage.CreateNewFile();
 
-            using (var captureStream = new InMemoryRandomAccessStream())
-            {
-                await _mediaCapture.CapturePhotoToStreamAsync(ImageEncodingProperties.CreateJpeg(), captureStream);
-
-                using (var fileStream = await file.OpenAsync(FileAccessMode.ReadWrite))
+                using (var captureStream = new InMemoryRandomAccessStream())
                 {
-                    var decoder = await BitmapDecoder.CreateAsync(captureStream);
-                    var encoder = await BitmapEncoder.CreateForTranscodingAsync(fileStream, decoder);
+                    await _mediaCapture.CapturePhotoToStreamAsync(ImageEncodingProperties.CreateJpeg(), captureStream);
 
-                    var properties = new BitmapPropertySet {
-                           { "System.Photo.Orientation", new BitmapTypedValue(PhotoOrientation.Normal, PropertyType.UInt16) }
-                    };
+                    using (var fileStream = await file.OpenAsync(FileAccessMode.ReadWrite))
+                    {
+                        var decoder = await BitmapDecoder.CreateAsync(captureStream);
+                        var encoder = await BitmapEncoder.CreateForTranscodingAsync(fileStream, decoder);
 
-                    await encoder.BitmapProperties.SetPropertiesAsync(properties);
-                    await encoder.FlushAsync();
+                        var properties = new BitmapPropertySet {
+                                   { "System.Photo.Orientation", new BitmapTypedValue(PhotoOrientation.Normal, PropertyType.UInt16) }
+                            };
 
-                    if (tsLocation.IsOn) {
-                        GeoTagImageFile(file);
+                        await encoder.BitmapProperties.SetPropertiesAsync(properties);
+                        await encoder.FlushAsync();
+
+                        if (tsLocation.IsOn)
+                        {
+                            GeoTagImageFile(file);
+                        }
                     }
                 }
             }
@@ -345,9 +349,6 @@ namespace Mobile_App_Development_Project
         {
             _settings.IsLocationActivated = tsLocation.IsOn;
 
-            // Update settings file
-            Storage.SaveSettingsInIsoStorage(_settings);
-
             if (tsLocation.IsOn && _geo == null)
             {
                 // Initialise GeoLocator
@@ -358,20 +359,33 @@ namespace Mobile_App_Development_Project
                     case GeolocationAccessStatus.Allowed:
                         _geo = new Geolocator();
                         _geo.DesiredAccuracy = PositionAccuracy.Default;
+                        
+                        tblLocationError.Text = "";
                         break;
                     default:
                         // There was a problem initialising GeoLocator
                         // Show an error to the user
+                        ResourceCandidate resource = ResourceManager.Current.MainResourceMap.GetValue("Resources/uidLocationError", ResourceContext.GetForCurrentView());
+                        tblLocationError.Text = resource.ValueAsString;
+
+                        // Turn off location toggle
+                        tsLocation.IsOn = false;
                         break;
                 }
             }
+
+            // Update settings file
+            Storage.SaveSettingsInIsoStorage(_settings);
         }
 
+        // Play the sound file identified by the filename
         private async void PlaySound(string filename)
         {
+            // Open the file as a stream
             StorageFile soundFile = await Package.Current.InstalledLocation.GetFileAsync(filename);
             var stream = await soundFile.OpenAsync(FileAccessMode.Read);
 
+            // Set the source of the MediaElement to the sound file stream and play it
             await Dispatcher.RunAsync(CoreDispatcherPriority.Normal, () =>
             {
                 _mediaElement.SetSource(stream, soundFile.ContentType);

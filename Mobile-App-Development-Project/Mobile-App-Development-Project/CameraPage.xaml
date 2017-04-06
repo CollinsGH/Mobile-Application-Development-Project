@@ -37,7 +37,7 @@
                     </Grid.ColumnDefinitions>
                     
                     <!-- Timer -->
-                    <TextBlock Grid.Row="0" Grid.Column="0" x:Uid="uidTimer" Text="Timer" FontSize="24"/>
+                    <TextBlock Grid.Row="0" Grid.Column="0" x:Uid="uidTimer" Text="Timer" FontSize="22" VerticalAlignment="Center" Padding="0, 0, 5, 0"/>
                     <ComboBox x:Name="cbTimer" Grid.Row="0" Grid.Column="1" SelectionChanged="cbTimer_SelectionChanged">
                         <ComboBoxItem x:Uid="uidNone" Content="None" IsSelected="True"/>
                         <ComboBoxItem Content="5"/>
@@ -49,8 +49,12 @@
                     </ComboBox>
                     
                     <!-- Location toggle -->
-                    <TextBlock Grid.Row="1" Grid.Column="0" x:Uid="uidLocation" Text="Location" FontSize="24"/>
-                    <ToggleSwitch x:Name="tsLocation" Grid.Row="1" Grid.Column="1" Toggled="tsLocation_Toggled"/>
+                    <TextBlock Grid.Row="1" Grid.Column="0" x:Uid="uidLocation" Text="Location" FontSize="22" VerticalAlignment="Center" Padding="0, 0, 5, 0"/>
+
+                    <StackPanel Grid.Row="1" Grid.Column="1" Orientation="Vertical">
+                        <TextBlock x:Name="tblLocationError" Foreground="Red" FontSize="10" TextWrapping="Wrap"/>
+                        <ToggleSwitch x:Name="tsLocation" Toggled="tsLocation_Toggled"/>
+                    </StackPanel>
                 </Grid>
             </SplitView.Pane>
 
