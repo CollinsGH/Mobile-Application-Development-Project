@@ -46,6 +46,7 @@ namespace Mobile_App_Development_Project
         private AppSettings _settings;
         private DispatcherTimer _timer;
         private int _remainingTime;
+        private MediaElement _mediaElement;
 
         public CameraPage()
         {
@@ -54,6 +55,8 @@ namespace Mobile_App_Development_Project
             // Create a new dispatch timer and add an event handler for the Tick event
             _timer = new DispatcherTimer();
             _timer.Tick += _timer_Tick;
+
+            _mediaElement = new MediaElement();
 
             LoadSettings();
 
@@ -241,6 +244,10 @@ namespace Mobile_App_Development_Project
 
         private void _timer_Tick(object sender, object e)
         {
+            // Play the tick sound
+            string filename = @"Sounds\tick-sound.mp3";
+            PlaySound(filename);
+
             // Decrement timer
             _remainingTime--;
 
@@ -262,8 +269,13 @@ namespace Mobile_App_Development_Project
 
         private async void TakePhoto()
         {
+            // Start the animation
             captureButtonStoryboard.Begin();
-            
+
+            // Play the shutter sound
+            string filename = @"Sounds\camera-sound.mp3";
+            PlaySound(filename);
+
             StorageFile file = await Storage.CreateNewFile();
 
             using (var captureStream = new InMemoryRandomAccessStream())
@@ -353,6 +365,18 @@ namespace Mobile_App_Development_Project
                         break;
                 }
             }
+        }
+
+        private async void PlaySound(string filename)
+        {
+            StorageFile soundFile = await Package.Current.InstalledLocation.GetFileAsync(filename);
+            var stream = await soundFile.OpenAsync(FileAccessMode.Read);
+
+            await Dispatcher.RunAsync(CoreDispatcherPriority.Normal, () =>
+            {
+                _mediaElement.SetSource(stream, soundFile.ContentType);
+                _mediaElement.Play();
+            });
         }
     }
 }
